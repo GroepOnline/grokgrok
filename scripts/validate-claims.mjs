@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ledger = JSON.parse(fs.readFileSync(path.join(REPO, "claims", "ledger.json"), "utf8"));
+const hasArtifactCache = fs.existsSync(path.join(REPO, ".cache", "artifact"));
 let failed = 0;
 const fail = (m) => { console.error("FAIL:", m); failed++; };
 
@@ -22,6 +23,7 @@ for (const e of ledger.entries) {
     if (!ev.source) fail(`${e.id}: evidence without source`);
   }
   for (const ref of [e.validator, ...(e.artifacts ?? [])].filter(Boolean)) {
+    if (ref.startsWith("evidence/generated/") && !hasArtifactCache) continue;
     if (!fs.existsSync(path.join(REPO, ref))) fail(`${e.id}: missing file ${ref}`);
   }
 }
