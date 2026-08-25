@@ -18,6 +18,8 @@ jobs:
         run: npx tsc --noEmit
       - name: Tests
         run: npm test
+      - name: Build + DOM tests
+        run: npm run build:desktop && npm run test:dom
       # Deterministic validators that need the artifact cache run locally;
       # CI validates ledger integrity and test suites without proprietary inputs.
       - name: Claim ledger check

@@ -2,7 +2,7 @@
   "schema": "grokgrok/version-snapshot@1",
   "artifactVersion": "0.24.0",
   "artifactSha256": "8d14c2bcecafe2f4dac4a90d9842bd94642851ee60de778ca614bfb11af53177",
-  "capturedAt": "2026-08-25T15:59:03.529Z",
+  "capturedAt": "2026-08-25T16:04:35.133Z",
   "protoAtlas": {
     "messages": [
       "proto.collector.logs.v1.ExportLogsPartialSuccess",

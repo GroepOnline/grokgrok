@@ -24,6 +24,21 @@ Key recovered facts so far:
 - Host plane: SQLite schema (agents/messages/media/blobs/transcript_entries/kv/…),
   SandBox run/migration/upgrade state machines, egress modes, paywall/access enums.
 - Renderer: page-stack navigation (no URL router), `--sand-*` design tokens.
+- **Protobuf atlas** (wave 2): 43 messages / 7 enums / 3 collector services / 161 fields
+  (OpenTelemetry export wire format; the only protobuf surface in the bundles) — zero unresolved fields.
+- **Dynamic-config registry** (wave 2): 130 zod-typed config keys recovered from client
+  registries (14 grok-bot-product `sand_*`/`grok_*`, 116 shared-platform) + 3 hard-coded gates;
+  presence proves bundling, not remote enablement.
+- **Renderer topology** (wave 2): authored source-path → chunk map for 8 entrypoints and
+  21 transcript cards, entrypoint framework contract (`eagerBoundaries`/`lazyViews`),
+  canonical surface anchors (`overlay:settings`, `view:org-chart`, …), 303-edge chunk graph.
+- **RPC contracts deepened** (wave 2): payload field types/nullability from handler bodies,
+  return shapes, assertion constraint strings surfaced as `MAIN_RPC_CONSTRAINTS`.
+- **Host/state contracts** (wave 2): local-tool permission precedence (never < ask < always,
+  ceiling only restricts), skills roots registry (.cursor/.claude/.codex/.grok/.agents),
+  Agent Store vs Sandbox Store separation, MCP lifecycle/OAuth knobs.
+- **Version snapshots** (wave 2): `npm run snapshot` writes `versions/v<version>.json`;
+  `--diff versions/v0.24.0.json` reports added/removed surfaces against any future artifact.
 
 ## Repo layout
 
@@ -39,7 +54,9 @@ Key recovered facts so far:
 ```sh
 GROK_BOT_ZIP=/path/to/Grok_Bot_0.24.0_linux_x64.zip npm run ingest   # verify SHA + extract to gitignored cache
 npm run validate        # deterministic validators (drift, sha gate, ledger)
-npm test                # spot-check suites
+npm test                # unit suites (no artifact needed)
+npm run build:desktop && npm run test:dom      # DOM/text scenario tests (jsdom)
+npm run snapshot        # versions/<v>.json surface inventory; --diff for drift
 npm run gen:desktop-bridge && npm run gen:coordinator-bridge   # regenerate wire TS
 ```
 
