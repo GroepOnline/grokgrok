@@ -1,0 +1,28 @@
+{
+  "schema": "grokgrok/renderer-surfaces@1",
+  "note": "Curated copy of semanticAnchors from the renderer topology extraction; committed because generated evidence is gitignored. Regenerate via scripts/analyze-renderer-topology.mjs.",
+  "surfaceIds": {
+    "orgChart": "view:org-chart",
+    "settings": "overlay:settings",
+    "settingsUsage": "overlay:settings/usage",
+    "settingsBeta": "overlay:settings/beta",
+    "plugins": "overlay:plugins",
+    "computer": "overlay:computer",
+    "hiddenChats": "overlay:hidden-chats",
+    "kitGallery": "overlay:galleries",
+    "widgetGallery": "overlay:widget-gallery",
+    "network": "overlay:network",
+    "broadcast": "overlay:broadcast"
+  },
+  "entrypointFramework": {
+    "declaration": "entrypoint.ts",
+    "eagerBoundaries": [
+      "loading.tsx",
+      "error.tsx"
+    ],
+    "lazyViews": [
+      "view.tsx",
+      "layout.tsx"
+    ]
+  }
+}

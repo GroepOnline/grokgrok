@@ -58,8 +58,9 @@ test("every scenario exposes evidence refs and renders without throwing", () => 
 });
 
 test("canonical surface ids match recovered renderer topology anchors", async () => {
-  const topo = JSON.parse(fs.readFileSync(path.join(REPO, "evidence/generated/renderer-topology.json"), "utf8"));
-  const anchors = Object.values(topo.semanticAnchors.surfaceIds);
+  // curated committed copy — generated topology json is gitignored
+  const surfaces = JSON.parse(fs.readFileSync(path.join(REPO, "evidence/curated/renderer-surfaces.json"), "utf8"));
+  const anchors = Object.values(surfaces.surfaceIds);
   const scenarioIds = new Set(hook.__grokgrok.scenarios.map((s) => s.id));
   for (const want of ["overlay:settings", "overlay:plugins", "overlay:computer", "overlay:hidden-chats"]) {
     assert.ok(anchors.includes(want), `topology anchor ${want} exists`);
