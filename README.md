@@ -23,6 +23,13 @@ Key recovered facts so far:
   automations, skills, forever-box), frame lifecycle `welcome→hello` with protocolVersion.
 - Host plane: SQLite schema (agents/messages/media/blobs/transcript_entries/kv/…),
   SandBox run/migration/upgrade state machines, egress modes, paywall/access enums.
+- Execution plane: `agent.v1.ControlService` (26 box-side methods), separate local-exec
+  daemon with generation-based ownership, GrokBot/SandBox cloud services (83 methods).
+- Automations: 42-method AutomationsService incl. automation-memory CRUD (distinct plane).
+- MCP/skills/plugins: lease-synced to box filesystem, per-tool failure telemetry,
+  OAuth discovery auth, per-server tool-disable.
+- Feature gates: 212 `SAND_*` names, Statsig-backed, grouped atlas + version-diff hook.
+- Native ABI: 9 N-API modules (linux-active) vs quarantined win32-only payloads.
 - Renderer: page-stack navigation (no URL router), `--sand-*` design tokens.
 
 ## Repo layout
@@ -38,9 +45,12 @@ Key recovered facts so far:
 
 ```sh
 GROK_BOT_ZIP=/path/to/Grok_Bot_0.24.0_linux_x64.zip npm run ingest   # verify SHA + extract to gitignored cache
-npm run validate        # deterministic validators (drift, sha gate, ledger)
+npm run analyze:all     # deterministic atlases -> evidence/generated/*.json (needs cache)
+npm run gen:contracts   # regenerate src/wire/subsystems.generated.ts from atlases
+npm run validate        # deterministic validators (drift, sha gate, ledger, atlas invariants)
 npm test                # spot-check suites
 npm run gen:desktop-bridge && npm run gen:coordinator-bridge   # regenerate wire TS
+node scripts/diff-version.mjs <old-generated-dir>             # version-diff hook for future releases
 ```
 
 ## Rules

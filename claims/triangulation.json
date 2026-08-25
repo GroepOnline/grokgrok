@@ -12,15 +12,15 @@
     {
       "subsystem": "desktop-bridge (dune-rpc)",
       "artifact024": "145-method main edge, probe/envelope protocol, trust policy",
-      "lineage018Match": "yes — preload exposes identical binding names (desktop, coordinatorPort); dune-rpc channel scheme present",
-      "grokBuildAnalogue": "partial — no public equivalent of the desktop bridge",
-      "openmausbotAnalogue": "no — web app uses direct API calls",
+      "lineage018Match": "yes \u2014 preload exposes identical binding names (desktop, coordinatorPort); dune-rpc channel scheme present",
+      "grokBuildAnalogue": "partial \u2014 no public equivalent of the desktop bridge",
+      "openmausbotAnalogue": "no \u2014 web app uses direct API calls",
       "confidence": "A"
     },
     {
       "subsystem": "coordinator runtime",
       "artifact024": "node-agent-coordinator with 103 commands, frame lifecycle hello/welcome/protocolVersion=1",
-      "lineage018Match": "yes — source/node-agent-coordinator exists in 0.18 tree",
+      "lineage018Match": "yes \u2014 source/node-agent-coordinator exists in 0.18 tree",
       "grokBuildAnalogue": "structural analogue in agent orchestration crates",
       "openmausbotAnalogue": "no direct analogue",
       "confidence": "A"
@@ -28,15 +28,15 @@
     {
       "subsystem": "host plane / box store",
       "artifact024": "SQLite tables agents/messages/media/blobs/transcript_entries; SandBox run/migration/upgrade state machines",
-      "lineage018Match": "yes — source/host present; store layout comparable",
+      "lineage018Match": "yes \u2014 source/host present; store layout comparable",
       "grokBuildAnalogue": "sandboxing concepts analogous (isolation, workspace)",
-      "openmausbotAnalogue": "weak — simple chat persistence only",
+      "openmausbotAnalogue": "weak \u2014 simple chat persistence only",
       "confidence": "A"
     },
     {
       "subsystem": "computer-use / VNC",
       "artifact024": "websockify tokens (port_token/network_token), vnc.html surface, vnc-user-presence events, preload-vnc",
-      "lineage018Match": "partial — computer-use concepts present, token scheme not confirmed",
+      "lineage018Match": "partial \u2014 computer-use concepts present, token scheme not confirmed",
       "grokBuildAnalogue": "tool-execution analogues only",
       "openmausbotAnalogue": "no",
       "confidence": "B"
@@ -51,10 +51,42 @@
     },
     {
       "subsystem": "coordinator system prompt",
-      "artifact024": "NOT RECOVERED — no claim made about proprietary prompt prose; section/contract structure only",
+      "artifact024": "NOT RECOVERED \u2014 no claim made about proprietary prompt prose; section/contract structure only",
       "lineage018Match": "n/a",
       "grokPromptsAnalogue": "reference for style/policy only; explicitly NOT evidence of the desktop coordinator prompt",
       "confidence": "F"
+    },
+    {
+      "subsystem": "execution plane (ControlService/local-exec)",
+      "artifact024": "26-method ControlService in host-main; separate local-exec-daemon bundle with JSON state files and generation counters",
+      "lineage018Match": "unverified",
+      "grokBuildAnalogue": "tool-execution analogues only",
+      "openmausbotAnalogue": "no",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "automation memory pipeline",
+      "artifact024": "AutomationsService automation-memory CRUD + SAND_MEMORY_* knobs (episode/extraction/synthesis/verification) + kill switch SAND_DISABLE_MEMORY_FREEZE",
+      "lineage018Match": "unverified",
+      "grokBuildAnalogue": "memory concepts analogous, no desktop equivalent",
+      "openmausbotAnalogue": "no",
+      "confidence": "B"
+    },
+    {
+      "subsystem": "mcp / skills / plugins",
+      "artifact024": "ControlService load/reload/install methods; lease-based filesystem sync with divergence telemetry; per-tool failure isolation labels; coordinator publish/unpublish skill commands; .cursor/* paths",
+      "lineage018Match": "partial \u2014 refreshMcp/listBoxMcpServers present in 0.18 tree",
+      "grokBuildAnalogue": "MCP config analogue",
+      "openmausbotAnalogue": "no",
+      "confidence": "B"
+    },
+    {
+      "subsystem": "native ABI",
+      "artifact024": "9 N-API modules + win32 helper; linux-active set verified via exported napi_register_module_v1; win32 payloads inert on this port",
+      "lineage018Match": "n/a",
+      "grokBuildAnalogue": "n/a",
+      "openmausbotAnalogue": "n/a",
+      "confidence": "A"
     }
   ]
 }

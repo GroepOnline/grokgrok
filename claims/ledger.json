@@ -6,90 +6,168 @@
       "subsystem": "provenance",
       "claim": "Primary artifact is Grok Bot 0.24.0 linux x64 with SHA-256 8d14c2bcecafe2f4dac4a90d9842bd94642851ee60de778ca614bfb11af53177",
       "confidence": "A",
-      "evidence": [{ "source": "Grok_Bot_0.24.0_linux_x64.zip", "kind": "artifact-structure", "detail": "hash verified at ingest" }],
+      "evidence": [
+        {
+          "source": "Grok_Bot_0.24.0_linux_x64.zip",
+          "kind": "artifact-structure",
+          "detail": "hash verified at ingest"
+        }
+      ],
       "validator": "scripts/validate-main-rpc.mjs"
     },
     {
       "id": "CLM-002",
       "subsystem": "desktop-bridge",
-      "claim": "Renderer↔main edge exposes exactly 145 RPC methods over dune-rpc channels with probe/envelope semantics",
+      "claim": "Renderer\u2194main edge exposes exactly 145 RPC methods over dune-rpc channels with probe/envelope semantics",
       "confidence": "A",
       "evidence": [
-        { "source": "dist/electron-preload/preload.cjs", "kind": "artifact-structure", "detail": "arg-style table lists 145 methods" },
-        { "source": "dist/electron-main/main.cjs", "kind": "artifact-structure", "detail": "handler groups ma(\"<group>\",…) total 145" }
+        {
+          "source": "dist/electron-preload/preload.cjs",
+          "kind": "artifact-structure",
+          "detail": "arg-style table lists 145 methods"
+        },
+        {
+          "source": "dist/electron-main/main.cjs",
+          "kind": "artifact-structure",
+          "detail": "handler groups ma(\"<group>\",\u2026) total 145"
+        }
       ],
       "validator": "tests/main-rpc.test.mjs",
-      "artifacts": ["src/wire/desktop-bridge.generated.ts"]
+      "artifacts": [
+        "src/wire/desktop-bridge.generated.ts"
+      ]
     },
     {
       "id": "CLM-003",
       "subsystem": "desktop-bridge",
       "claim": "Preload exposes exactly two bindings: desktop and coordinatorPort",
       "confidence": "A",
-      "evidence": [{ "source": "dist/electron-preload/preload.cjs", "kind": "artifact-string", "detail": "exposeInMainWorld(\"desktop\"), exposeInMainWorld(\"coordinatorPort\")" }]
+      "evidence": [
+        {
+          "source": "dist/electron-preload/preload.cjs",
+          "kind": "artifact-string",
+          "detail": "exposeInMainWorld(\"desktop\"), exposeInMainWorld(\"coordinatorPort\")"
+        }
+      ]
     },
     {
       "id": "CLM-004",
       "subsystem": "coordinator",
       "claim": "node-agent-coordinator declares 103 distinct commands across coordinator-main/control edges with typed reply kinds",
       "confidence": "A",
-      "evidence": [{ "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure", "detail": "method tables {name:{args,reply}}" }],
+      "evidence": [
+        {
+          "source": "dist/node-agent-coordinator/main.cjs",
+          "kind": "artifact-structure",
+          "detail": "method tables {name:{args,reply}}"
+        }
+      ],
       "validator": "tests/coordinator.test.mjs",
-      "artifacts": ["src/wire/coordinator-bridge.generated.ts"]
+      "artifacts": [
+        "src/wire/coordinator-bridge.generated.ts"
+      ]
     },
     {
       "id": "CLM-005",
       "subsystem": "coordinator",
-      "claim": "Control protocol uses lifecycle|request|cancel|reply|event frames with welcome→hello handshake and numeric protocolVersion (=1 observed)",
+      "claim": "Control protocol uses lifecycle|request|cancel|reply|event frames with welcome\u2192hello handshake and numeric protocolVersion (=1 observed)",
       "confidence": "B",
-      "evidence": [{ "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure", "detail": "frame switch + phase validators at multiple sites" }]
+      "evidence": [
+        {
+          "source": "dist/node-agent-coordinator/main.cjs",
+          "kind": "artifact-structure",
+          "detail": "frame switch + phase validators at multiple sites"
+        }
+      ]
     },
     {
       "id": "CLM-006",
       "subsystem": "store",
       "claim": "Agent store is SQLite (better-sqlite3) with tables meta/files/pending_deletes/agents/messages/media/kv/blobs/transcript_entries",
       "confidence": "A",
-      "evidence": [{ "source": "dist/host/host-main.cjs", "kind": "artifact-string", "detail": "CREATE TABLE statements" }],
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-string",
+          "detail": "CREATE TABLE statements"
+        }
+      ],
       "validator": "scripts/analyze-host.mjs",
-      "artifacts": ["evidence/generated/host-atlas.json"]
+      "artifacts": [
+        "evidence/generated/host-atlas.json"
+      ]
     },
     {
       "id": "CLM-007",
       "subsystem": "execution",
       "claim": "SandBox has run states ABSENT/HIBERNATED/RUNNING, 8-phase migration state machine, and an upgrade-schedule state machine",
       "confidence": "A",
-      "evidence": [{ "source": "dist/host/host-main.cjs", "kind": "artifact-string", "detail": "SAND_BOX_RUN_STATE_*/SAND_BOX_MIGRATION_PHASE_*/SAND_BOX_UPGRADE_SCHEDULE_STATE_* enums" }],
-      "artifacts": ["evidence/generated/host-atlas.json"]
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-string",
+          "detail": "SAND_BOX_RUN_STATE_*/SAND_BOX_MIGRATION_PHASE_*/SAND_BOX_UPGRADE_SCHEDULE_STATE_* enums"
+        }
+      ],
+      "artifacts": [
+        "evidence/generated/host-atlas.json"
+      ]
     },
     {
       "id": "CLM-008",
       "subsystem": "renderer",
       "claim": "Renderer navigates via an in-app page stack (history.pages, View* models) rather than a URL router",
       "confidence": "B",
-      "evidence": [{ "source": "dist/renderer/assets/index-Bbahbz13.js", "kind": "artifact-structure", "detail": "no router framework strings; history.pages stack present" }],
-      "artifacts": ["docs/ui/renderer-atlas.md"]
+      "evidence": [
+        {
+          "source": "dist/renderer/assets/index-Bbahbz13.js",
+          "kind": "artifact-structure",
+          "detail": "no router framework strings; history.pages stack present"
+        }
+      ],
+      "artifacts": [
+        "docs/ui/renderer-atlas.md"
+      ]
     },
     {
       "id": "CLM-009",
       "subsystem": "renderer",
       "claim": "Design tokens use --sand-* custom properties plus --cursor-radius-* scale",
       "confidence": "A",
-      "evidence": [{ "source": "dist/renderer/assets/index-yJda_gYk.css", "kind": "artifact-string" }],
-      "artifacts": ["evidence/generated/renderer-atlas.json"]
+      "evidence": [
+        {
+          "source": "dist/renderer/assets/index-yJda_gYk.css",
+          "kind": "artifact-string"
+        }
+      ],
+      "artifacts": [
+        "evidence/generated/renderer-atlas.json"
+      ]
     },
     {
       "id": "CLM-010",
       "subsystem": "config",
       "claim": "Feature flags/experiments are Statsig-based (featureassets.org/statsigapi.net endpoints, gate overrides env SAND_FEATURE_GATE_OVERRIDES)",
       "confidence": "B",
-      "evidence": [{ "source": "dist/electron-main/main.cjs + dist/host/host-main.cjs", "kind": "artifact-string", "detail": "sdk endpoints + experiment_name/use_experimental_model_opt_out strings" }]
+      "evidence": [
+        {
+          "source": "dist/electron-main/main.cjs + dist/host/host-main.cjs",
+          "kind": "artifact-string",
+          "detail": "sdk endpoints + experiment_name/use_experimental_model_opt_out strings"
+        }
+      ]
     },
     {
       "id": "CLM-011",
       "subsystem": "identity",
       "claim": "App package name is 'sand' (productName 'Grok Bot'), built on @anysphere/* workspace stack",
       "confidence": "A",
-      "evidence": [{ "source": "app.asar:package.json", "kind": "artifact-structure" }]
+      "evidence": [
+        {
+          "source": "app.asar:package.json",
+          "kind": "artifact-structure"
+        }
+      ]
     },
     {
       "id": "CLM-012",
@@ -97,10 +175,158 @@
       "claim": "Auto-review approvals resolve via resolveAutoReviewApproval; local-tool permission via resolveLocalToolPermission + recordLocalToolApproval(approvalId, action, target); secrets via listSecrets/revealSecret/upsertSecrets/removeSecrets desktop commands and submitSecret/setBoxSecrets coordinator/host side",
       "confidence": "A",
       "evidence": [
-        { "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure" },
-        { "source": "dist/electron-main/main.cjs", "kind": "artifact-structure" }
+        {
+          "source": "dist/node-agent-coordinator/main.cjs",
+          "kind": "artifact-structure"
+        },
+        {
+          "source": "dist/electron-main/main.cjs",
+          "kind": "artifact-structure"
+        }
       ],
-      "artifacts": ["src/wire/desktop-bridge.generated.ts", "src/wire/coordinator-bridge.generated.ts"]
+      "artifacts": [
+        "src/wire/desktop-bridge.generated.ts",
+        "src/wire/coordinator-bridge.generated.ts"
+      ]
+    },
+    {
+      "id": "CLM-013",
+      "subsystem": "execution",
+      "confidence": "A",
+      "claim": "agent.v1.ControlService is the box-side execution contract: 26 methods covering exec streaming, filesystem read/write/list/diff, artifact persist/restore (agent store + parent store), env updates, skills/plugins reload + install, MCP server load and refresh-token retrieval, GitHub token refresh, remote-access warmup",
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-structure",
+          "detail": "ConnectRPC service table typeName:\"agent.v1.ControlService\""
+        }
+      ],
+      "validator": "tests/subsystems.test.mjs",
+      "artifacts": [
+        "evidence/generated/services-atlas.json",
+        "src/wire/subsystems.generated.ts"
+      ]
+    },
+    {
+      "id": "CLM-014",
+      "subsystem": "execution",
+      "confidence": "A",
+      "claim": "Box lifecycle is a cloud-mediated surface: GrokBotService+SandBoxService expose ensure/recreate/forceRecreate, ServerStreaming watchSandBoxMigration, run-state and upgrade-schedule getters/schedulers, presigned store writes incl. multipart complete/abort, admin snapshot/manifest-version/restore/hibernate and team member sandbox kill",
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-structure",
+          "detail": "GrokBotService table (47 methods)"
+        },
+        {
+          "source": "dist/electron-main/main.cjs",
+          "kind": "artifact-structure",
+          "detail": "SandBoxService table (36 methods)"
+        }
+      ],
+      "validator": "tests/subsystems.test.mjs"
+    },
+    {
+      "id": "CLM-015",
+      "subsystem": "memory",
+      "confidence": "A",
+      "claim": "Automation memory is a first-class durable plane distinct from conversation transcripts and the agent store: AutomationsService (42 methods) includes listAutomationMemories/getAutomationMemory/updateAutomationMemory/deleteAutomationMemory plus spec validate/apply, workflow templates, run lifecycle and Sentry integration",
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-structure",
+          "detail": "aiserver.v1.AutomationsService method table"
+        },
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-string",
+          "detail": "SAND_MEMORY_EPISODE/_EXTRACTION/_SYNTHESIS_V1/_SYNTHESIS_VERIFICATION_V1 knobs; memoryStore/userMemory/projectMemory vocabulary"
+        }
+      ],
+      "validator": "tests/subsystems.test.mjs"
+    },
+    {
+      "id": "CLM-016",
+      "subsystem": "local-exec",
+      "confidence": "B",
+      "claim": "A separate local-exec-daemon bundle (~4MB) runs exec outside the box path; its state is a set of JSON files (connection, discovery, credential, supervisor, update-lease, account-retire, account-generation, log) whose paths are joined by the coordinator; generation counters gate ownership handoff",
+      "evidence": [
+        {
+          "source": "dist/node-agent-coordinator/main.cjs",
+          "kind": "artifact-structure",
+          "detail": "local-exec-daemon-connection.json .. local-exec-account-generation.json filename constants + join() usage"
+        },
+        {
+          "source": "dist/local-exec-daemon/main.cjs",
+          "kind": "artifact-string",
+          "detail": "exec-daemon-shutdown/-ownership/-file-key-handoff channel strings; SAND_LOCAL_EXEC_GENERATION"
+        }
+      ],
+      "validator": "scripts/validate-atlases.mjs",
+      "artifacts": [
+        "evidence/generated/services-atlas.json"
+      ]
+    },
+    {
+      "id": "CLM-017",
+      "subsystem": "mcp",
+      "confidence": "B",
+      "claim": "MCP server config syncs from app state onto the box filesystem under a single-writer lease with expected-vs-actual divergence telemetry; tool calls carry per-call failure_reason/retryable classification proving per-tool failure isolation at the telemetry boundary",
+      "evidence": [
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-structure",
+          "detail": "mcp.filesystem.sync_check.* metrics labelNames [mcp_source,mcp_version]; mcpLease.onDidChange; pendingLeaseChangeEvent"
+        },
+        {
+          "source": "dist/host/host-main.cjs",
+          "kind": "artifact-string",
+          "detail": "mcp.meta.call_tool_error labelNames [mcp_mode,failure_reason,retryable]"
+        }
+      ],
+      "validator": "scripts/validate-atlases.mjs",
+      "artifacts": [
+        "evidence/generated/mcp-skills-atlas.json"
+      ]
+    },
+    {
+      "id": "CLM-018",
+      "subsystem": "native",
+      "confidence": "A",
+      "claim": "Native payload = 9 N-API .node modules + 1 Windows helper. Linux-active set: better_sqlite3, tree-sitter, tree-sitter-bash, whichlang-node.linux-x64-gnu, tree-chunk-napi.linux-x64-gnu, cursor_proclist (napi_register_module_v1 verified via nm). Win32-only payloads (tree-chunk-napi.win32, whichlang.win32, tree-sitter-bash win32 prebuild, sand-webauthn-signer.exe) are quarantined as inert on this linux port",
+      "evidence": [
+        {
+          "source": "resources/app.asar.unpacked/dist/deps",
+          "kind": "artifact-structure",
+          "detail": "nm -D exports: napi_register_module_v1 present in all active modules"
+        },
+        {
+          "source": "dist/electron-main/main.cjs",
+          "kind": "artifact-string",
+          "detail": "cursor_proclist_scan_async call site"
+        }
+      ],
+      "validator": "scripts/validate-atlases.mjs",
+      "artifacts": [
+        "evidence/generated/native-abi.json"
+      ]
+    },
+    {
+      "id": "CLM-019",
+      "subsystem": "config",
+      "confidence": "B",
+      "claim": "Feature-gate vocabulary totals 212 distinct SAND_* names across shipped bundles (163 config knobs + 49 enum members), Statsig-backed with desktop override commands and SAND_FEATURE_GATE_OVERRIDES / SAND_MODEL_EXPERIMENT_OVERRIDE env overrides; bundled presence is capability evidence only",
+      "evidence": [
+        {
+          "source": "bundles/*.cjs",
+          "kind": "artifact-structure",
+          "detail": "per-bundle SAND_* extraction with provenance; featureassets.org/statsigapi.net endpoints"
+        }
+      ],
+      "validator": "scripts/validate-atlases.mjs",
+      "artifacts": [
+        "evidence/generated/feature-gates.json"
+      ]
     }
   ]
 }

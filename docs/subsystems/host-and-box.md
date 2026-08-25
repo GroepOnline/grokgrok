@@ -42,6 +42,17 @@ Block reasons include FREE_TRIAL_AVAILABLE, PAYWALL_INDIVIDUAL, PAYWALL_TEAM_ADM
 TEAM_ACCESS_REQUIRED, TEAM_PRIVACY_MODE, TEAM_SETUP_REQUIRED — matching the Settings
 "Team Setup" surface and trial claim states (PENDING_CARD, REJECTED_DUPLICATE_CARD, …).
 
+## Memory persistence boundaries (four planes, all artifact-named)
+
+| Plane | Storage | Evidence |
+| --- | --- | --- |
+| **Agent store** (conversation transcripts + media) | SQLite `agents`/`messages`/`media` tables via agent-store-worker | CLM-006; ControlService `persistArtifactsToAgentStore`/`ToParentStore` for cross-store handoff |
+| **Automation memory** (durable per-automation notes) | cloud CRUD via AutomationsService: `listAutomationMemories`/`getAutomationMemory`/`updateAutomationMemory`/`deleteAutomationMemory` | distinct service surface — not a table in the local store |
+| **User/project memory** (agent memory pipeline) | host-side memoryStore with user/project scoping (`userMemoryDir`, `projectMemory`, `addMemory`/`removeMemoryByContent`) + episode/extraction/synthesis knobs `SAND_MEMORY_*`, freeze kill-switch `SAND_DISABLE_MEMORY_FREEZE` | vocabulary in host-main; synthesis has its own verification knob |
+| **SandBox filesystem** (ephemeral workspace state) | box image + store pipeline (presigned writes, multipart, snapshots) | GrokBotService/SandBoxService surfaces |
+
+Conversation size is bounded by `SAND_CONVERSATION_SOFT/HARD_LIMIT_BYTES` + `SAND_CONVERSATION_GC`.
+
 ## Cloud API surface (`/sand/*`, backend from SAND_BACKEND_URL)
 
 share-rooms CRUD/join/invite/picture, share-state, listener subscriptions/events,

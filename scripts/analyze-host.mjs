@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { readAsarHeader, walkFiles } from "./lib/asar.mjs";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BUNDLES = path.join(REPO, ".cache", "artifact", "0.24.0", "bundles");
@@ -45,11 +46,20 @@ const urls = grab(/https:\/\/[a-z0-9.-]+[a-z0-9/._-]*/g);
 // env flags
 const env = [...new Set([...s.matchAll(/\b(SAND_[A-Z_]+)/g)].map((m) => m[1]))].sort();
 
-// worker files inventory
-const inv = JSON.parse(fs.readFileSync(path.join(REPO, "evidence", "generated", "ingest.json"), "utf8"));
-const workers = inv.files.filter((f) => f.path.includes("worker")).map((f) => f.path);
+// worker files inventory (from ingest.json when present, else from the cached asar header)
+let workers;
+const invPath = path.join(REPO, "evidence", "generated", "ingest.json");
+if (fs.existsSync(invPath)) {
+  const inv = JSON.parse(fs.readFileSync(invPath, "utf8"));
+  workers = inv.files.filter((f) => f.path.includes("worker")).map((f) => f.path);
+} else {
+  const buf = fs.readFileSync(path.join(REPO, ".cache", "artifact", "0.24.0", "app.asar"));
+  workers = [...walkFiles(readAsarHeader(buf).header)].filter((f) => f.path.includes("worker")).map((f) => f.path);
+}
 
-console.log(JSON.stringify({
+const dest = path.join(REPO, "evidence", "generated", "host-atlas.json");
+fs.mkdirSync(path.dirname(dest), { recursive: true });
+fs.writeFileSync(dest, JSON.stringify({
   schema: "grokgrok/host-atlas@1",
   sqliteTables: tables,
   tableColumns: columns,
@@ -61,3 +71,4 @@ console.log(JSON.stringify({
   envFlags: env,
   workers,
 }, null, 2));
+console.error(`host-atlas written: ${path.relative(REPO, dest)}`);

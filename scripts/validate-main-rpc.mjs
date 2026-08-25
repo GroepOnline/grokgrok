@@ -31,8 +31,8 @@ const after = fs.readFileSync(genPath, "utf8");
 if (before !== null && before !== after) fail("desktop-bridge.generated.ts is stale — run npm run gen:desktop-bridge");
 else if (before === null) console.error("generated file was missing; created");
 
-// hard invariants
-const methodCount = [...after.matchAll(/^  [a-zA-Z_$][\w$]*: \{/gm)].length;
+// hard invariants (count only method-table entries, not ProvenPayloads interface members)
+const methodCount = [...after.matchAll(/^  [a-zA-Z_$][\w$]*: \{ args:/gm)].length;
 if (methodCount !== 145) fail(`expected 145 main-edge methods, generated ${methodCount}`);
 else console.error(`ok: 145 methods`);
 

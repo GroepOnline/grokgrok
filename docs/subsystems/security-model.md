@@ -8,9 +8,16 @@ confidence A for mechanism names, B for precedence semantics.
 - Commands: `resolveAutoReviewApproval`, `resolveLocalToolPermission` (coordinator edge),
   `recordLocalToolApproval(approvalId, action, target)` and `get/setLocalToolPermission`
   + `getLocalToolPermissionCeiling` (desktop main edge), `clearLocalToolApprovals`.
-- Settings vocabulary "Auto-review" appears in renderer chat chunks.
+- Settings vocabulary "Auto-review" appears in renderer chat chunks; host env
+  `SAND_AUTO_REVIEW_MODE` proves the mode is carried into the host plane.
 - Precedence reading (B): per-action approval records exist independently of the global
   mode; `Always Allow` corresponds to persisted permission grants bounded by a ceiling.
+- Local-exec is separately gated: `LocalExecAllowlistEnforcement` + `LocalExecRefused`
+  error names in host-main prove an allowlist check distinct from box exec permissions.
+
+Unknown (not claimed): the exact evaluation order between auto-review mode, per-action
+approvals, permission ceiling, and local-exec allowlist. The shipped client shows the
+surfaces but not the comparator.
 
 ## Secrets
 

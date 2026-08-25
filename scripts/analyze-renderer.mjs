@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { readAsarHeader, walkFiles } from "./lib/asar.mjs";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CACHE = path.join(REPO, ".cache", "artifact", "0.24.0");
@@ -18,7 +19,15 @@ function asarGet(inner, dest) {
   return dest ?? out;
 }
 
-const inventory = JSON.parse(fs.readFileSync(path.join(REPO, "evidence", "generated", "ingest.json"), "utf8"));
+let inventory;
+const invPath = path.join(REPO, "evidence", "generated", "ingest.json");
+if (fs.existsSync(invPath)) {
+  inventory = JSON.parse(fs.readFileSync(invPath, "utf8"));
+} else {
+  // fall back to the cached asar header when ingest.json is absent
+  const buf = fs.readFileSync(path.join(REPO, ".cache", "artifact", "0.24.0", "app.asar"));
+  inventory = { files: [...walkFiles(readAsarHeader(buf).header)].map((f) => ({ path: f.path })) };
+}
 const chunks = inventory.files.filter((f) => f.path.startsWith("dist/renderer/assets/") && f.path.endsWith(".js"));
 
 // vocabulary to confirm (mission targets + observed command/event names)
