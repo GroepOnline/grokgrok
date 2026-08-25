@@ -20,6 +20,7 @@ test("core agent-runtime commands present", () => {
 });
 
 test("frame kinds and lifecycle phases recorded", () => {
-  assert.match(gen, /FRAME_KINDS = \[.*"lifecycle".*"request"/s);
+  const kinds = gen.match(/FRAME_KINDS = \[([^\]]*)\]/)[1];
+  for (const k of ["lifecycle", "request", "cancel", "reply", "event"]) assert.ok(kinds.includes(`"${k}"`), `missing frame kind ${k}`);
   assert.match(gen, /LIFECYCLE_PHASES = \[.*"hello".*"ready"/s);
 });
