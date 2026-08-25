@@ -9,7 +9,8 @@
     "ingest": "node scripts/ingest.mjs",
     "inventory": "node scripts/ingest.mjs --inventory-only",
     "validate": "node scripts/validate-all.mjs",
-    "test": "node --test tests/",
+    "gen:desktop-bridge": "node scripts/generate-desktop-bridge.mjs",
+    "test": "node --test tests/*.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
