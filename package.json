@@ -10,6 +10,7 @@
     "inventory": "node scripts/ingest.mjs --inventory-only",
     "validate": "node scripts/validate-all.mjs",
     "gen:desktop-bridge": "node scripts/generate-desktop-bridge.mjs",
+    "gen:coordinator-bridge": "node scripts/generate-coordinator-bridge.mjs",
     "test": "node --test tests/*.mjs",
     "typecheck": "tsc --noEmit"
   },
