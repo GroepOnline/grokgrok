@@ -17,7 +17,8 @@
     "test:all": "npm run test && npm run test:dom",
     "typecheck": "tsc --noEmit",
     "build:desktop": "tsc apps/desktop/app.ts --target es2022 --module esnext --moduleResolution bundler --lib es2022,dom --outDir apps/desktop/dist && cp apps/desktop/index.html apps/desktop/styles.css apps/desktop/dist/",
-    "test:dom": "node --test tests/dom.test.mjs"
+    "test:dom": "node --test tests/dom.test.mjs",
+    "snapshot": "node scripts/version-snapshot.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.3.0",
