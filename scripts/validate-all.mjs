@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const validators = ["validate-main-rpc.mjs", "validate-claims.mjs", "validate-proto.mjs"]; // extend as subsystems land
+const validators = ["validate-main-rpc.mjs", "validate-claims.mjs", "validate-proto.mjs", "validate-renderer-topology.mjs"]; // extend as subsystems land
 for (const v of validators) {
   console.error(`\n== ${v}`);
   try {

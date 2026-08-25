@@ -44,3 +44,27 @@ org-chart/graph views, document rendering) and give clean-room module boundaries
 Shipped chunk names are hashed/minified; component file names are NOT preserved.
 All reconstructed UI uses explicit clean-room names per the repo convention, anchored to
 the sidebar-first layout and the vocabulary/table above.
+
+## Topology deep-scan (wave 2)
+
+Full machine-readable topology: `evidence/generated/renderer-topology.json`
+(`scripts/analyze-renderer-topology.mjs`; validated by `scripts/validate-renderer-topology.mjs`).
+Confidence: A — extracted from Vite glob module maps embedded in the entry chunk.
+
+| Surface | Count | Notes |
+| --- | --- | --- |
+| Entrypoint dirs (authored `./features/.../entrypoint.ts`) | 8 | chat/workspace, computer/overlay, hidden-chats/overlay, org-chart/workspace, plugins/overlay, settings/overlay{,/beta,/usage} |
+| Lazy view chunks wired to entrypoints | per-dir | via `import("./view-<hash>.js")` boundaries |
+| Transcript cards (`.../cards/**`) | 21 | agents/events, channels/events, chat/messages + notices; each has an eager definition module and a lazy view chunk |
+| JS chunks in artifact | 171 | hashes are build-specific |
+| Import graph edges | 303 | 141 dynamic (lazy) boundaries |
+
+Authored framework contract (embedded verbatim in the bundle):
+`{declaration:"entrypoint.ts", eagerBoundaries:["loading.tsx","error.tsx"], lazyViews:["view.tsx","layout.tsx"]}`
+— each feature dir declares an eager `entrypoint.ts`, with `view.tsx`/`layout.tsx` as lazy siblings.
+
+Semantic surface anchors (`aa` registry): `view:org-chart`,
+`overlay:settings(/usage|/beta)`, `overlay:plugins`, `overlay:computer`,
+`overlay:hidden-chats`, `overlay:galleries`, `overlay:widget-gallery`,
+`overlay:network`, `overlay:broadcast`. These are the canonical screen ids the
+desktop shell navigates by — reconstruction uses them as scenario keys.
