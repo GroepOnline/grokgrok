@@ -1,0 +1,60 @@
+{
+  "$schema": "./schema.json",
+  "description": "Per-subsystem triangulation of Grok Bot 0.24 artifact evidence against lineage and analogues. Analogy never upgrades confidence; only artifact evidence does.",
+  "sources": {
+    "artifact-0.24": "shipped Grok_Bot_0.24.0_linux_x64.zip (SHA verified)",
+    "lineage-0.18": "b-nnett/grok-bot-0.18-reconstructed (read-only reference)",
+    "grok-build": "xai-org/grok-build (official modern agent-architecture analogue)",
+    "openmausbot": "milind-soni/OpenMausBot (Apache-2.0 behavioural analogue)",
+    "grok-prompts": "xai-org/grok-prompts (official prompt/policy reference; NOT proof of desktop coordinator prompt)"
+  },
+  "subsystems": [
+    {
+      "subsystem": "desktop-bridge (dune-rpc)",
+      "artifact024": "145-method main edge, probe/envelope protocol, trust policy",
+      "lineage018Match": "yes — preload exposes identical binding names (desktop, coordinatorPort); dune-rpc channel scheme present",
+      "grokBuildAnalogue": "partial — no public equivalent of the desktop bridge",
+      "openmausbotAnalogue": "no — web app uses direct API calls",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "coordinator runtime",
+      "artifact024": "node-agent-coordinator with 103 commands, frame lifecycle hello/welcome/protocolVersion=1",
+      "lineage018Match": "yes — source/node-agent-coordinator exists in 0.18 tree",
+      "grokBuildAnalogue": "structural analogue in agent orchestration crates",
+      "openmausbotAnalogue": "no direct analogue",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "host plane / box store",
+      "artifact024": "SQLite tables agents/messages/media/blobs/transcript_entries; SandBox run/migration/upgrade state machines",
+      "lineage018Match": "yes — source/host present; store layout comparable",
+      "grokBuildAnalogue": "sandboxing concepts analogous (isolation, workspace)",
+      "openmausbotAnalogue": "weak — simple chat persistence only",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "computer-use / VNC",
+      "artifact024": "websockify tokens (port_token/network_token), vnc.html surface, vnc-user-presence events, preload-vnc",
+      "lineage018Match": "partial — computer-use concepts present, token scheme not confirmed",
+      "grokBuildAnalogue": "tool-execution analogues only",
+      "openmausbotAnalogue": "no",
+      "confidence": "B"
+    },
+    {
+      "subsystem": "feature flags / config",
+      "artifact024": "Statsig SDK endpoints, gate overrides env, experiments snapshot commands",
+      "lineage018Match": "unverified",
+      "grokBuildAnalogue": "config-layer analogue",
+      "openmausbotAnalogue": "no",
+      "confidence": "B"
+    },
+    {
+      "subsystem": "coordinator system prompt",
+      "artifact024": "NOT RECOVERED — no claim made about proprietary prompt prose; section/contract structure only",
+      "lineage018Match": "n/a",
+      "grokPromptsAnalogue": "reference for style/policy only; explicitly NOT evidence of the desktop coordinator prompt",
+      "confidence": "F"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+name: ci
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Tests
+        run: npm test
+      # Deterministic validators that need the artifact cache run locally;
+      # CI validates ledger integrity and test suites without proprietary inputs.
+      - name: Claim ledger check
+        run: node scripts/validate-claims.mjs

@@ -4,7 +4,9 @@
   "private": true,
   "description": "Clean-room reconstruction and architecture atlas for Grok Bot 0.24+",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "ingest": "node scripts/ingest.mjs",
     "inventory": "node scripts/ingest.mjs --inventory-only",
@@ -15,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.5.0"
+    "@types/node": "^26.3.0",
+    "typescript": "^5.9.3"
   }
 }

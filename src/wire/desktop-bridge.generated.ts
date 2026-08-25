@@ -200,7 +200,56 @@ export const MAIN_RPC_EVENTS = [
 
 export type MainRpcEvent = (typeof MAIN_RPC_EVENTS)[number];
 
-export type MainRpcPayload<M extends MainRpcMethod> =
-  MAIN_RPC_METHODS[M]["args"] extends "none"
-    ? undefined
-    : { readonly [K in MAIN_RPC_METHODS[M]["payloadKeys"][number]]: unknown };
+/** Payload shapes for methods whose object keys are artifact-proven (destructured in main handlers). */
+export interface ProvenPayloads {
+  checkForUpdates: { readonly trigger: unknown };
+  setUpdateTrack: { readonly track: unknown };
+  quitAndInstallUpdate: { readonly expectedVersion: unknown };
+  setAutoUpdateWhenIdleOptIn: { readonly enabled: unknown };
+  getTimeZone: { readonly detectedTimeZone: unknown; readonly overrideTimeZone: unknown };
+  setTimeZoneOverride: { readonly timeZone: unknown };
+  setAutoReviewInstructions: { readonly instructions: unknown };
+  recordLocalToolApproval: { readonly approvalId: unknown; readonly action: unknown; readonly target: unknown };
+  setThemePreference: { readonly preference: unknown };
+  setLanguagePreference: { readonly preference: unknown };
+  setHardwareAccelerationEnabled: { readonly enabled: unknown };
+  setAgentDefaultModel: { readonly model: unknown };
+  setComputerUseModel: { readonly model: unknown };
+  setHostPinnedAgents: { readonly pinnedAgentIds: unknown };
+  setHostSidebarSections: { readonly sections: unknown };
+  getPublicBotTemplate: { readonly shareId: unknown };
+  setEgressTunnelEnabled: { readonly enabled: unknown };
+  setWebauthnProxyEnabled: { readonly enabled: unknown };
+  setOnboardingSeen: { readonly seen: unknown };
+  openExternal: { readonly url: unknown };
+  openCloudAgent: { readonly bcId: unknown };
+  updateComputer: { readonly id: unknown; readonly requestId: unknown; readonly acknowledgeTerminalUpgradeSchedule: unknown };
+  setTitleBarOverlayTone: { readonly isOverlayTone: unknown };
+  resizeWindowWidth: { readonly deltaWidth: unknown };
+  generateAgentAvatarImage: { readonly description: unknown };
+  resolveAttachmentMedia: { readonly source: unknown };
+  readAttachmentText: { readonly path: unknown };
+  readAttachmentBytes: { readonly path: unknown; readonly maxBytes: unknown };
+  stageAttachmentBytes: { readonly filename: unknown; readonly bytes: unknown };
+  downloadAttachment: { readonly path: unknown; readonly suggestedName: unknown };
+  commitStagedAttachments: { readonly paths: unknown; readonly filenames: unknown };
+  discardStagedAttachment: { readonly path: unknown };
+  getLinkMetadata: { readonly url: unknown };
+  switchCursorAccount: { readonly accountId: unknown };
+  updateCursorAccountName: { readonly name: unknown };
+  updateSandMachineLabel: { readonly machineId: unknown; readonly label: unknown };
+  transcribeAudio: { readonly audio: unknown; readonly mimeType: unknown; readonly language: unknown };
+  reportBoxVisibility: { readonly report: unknown; readonly senderDocumentKey: unknown };
+  applyFeatureFlagOverride: { readonly command: unknown };
+  listSecrets: { readonly keys: unknown; readonly isPersistent: unknown };
+  revealSecret: { readonly key: unknown };
+  upsertSecrets: { readonly entries: unknown };
+  removeSecrets: { readonly keys: unknown };
+  readClientPersistence: { readonly key: unknown };
+  writeClientPersistence: { readonly key: unknown; readonly value: unknown };
+  removeClientPersistence: { readonly key: unknown };
+  listClientPersistenceKeys: { readonly prefix: unknown };
+  migrateClientPersistence: { readonly entries: unknown };
+  setAttachProdBoxEnabled: { readonly enabled: unknown; readonly isRestartMainApp: unknown };
+  importChromeCookies: { readonly cookies: unknown };
+}

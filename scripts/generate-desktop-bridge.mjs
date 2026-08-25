@@ -75,11 +75,15 @@ ${domainEvents.map((e) => `  ${JSON.stringify(e)},`).join("\n")}
 
 export type MainRpcEvent = (typeof MAIN_RPC_EVENTS)[number];
 
-export type MainRpcPayload<M extends MainRpcMethod> =
-  MAIN_RPC_METHODS[M]["args"] extends "none"
-    ? undefined
-    : { readonly [K in MAIN_RPC_METHODS[M]["payloadKeys"][number]]: unknown };
+/** Payload shapes for methods whose object keys are artifact-proven (destructured in main handlers). */
+export interface ProvenPayloads {
 `;
+for (const [name, keys] of Object.entries(payloadKeys)) {
+  ts += `  ${name}: { ${keys.map((k) => `readonly ${k}: unknown`).join("; ")} };\n`;
+}
+ts += `}`;
+
+fs.mkdirSync
 
 fs.mkdirSync(path.join(REPO, "src", "wire"), { recursive: true });
 fs.writeFileSync(path.join(REPO, "src", "wire", "desktop-bridge.generated.ts"), ts);
