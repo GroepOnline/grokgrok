@@ -22,3 +22,20 @@
 
 Full env-flag inventory: `evidence/generated/host-atlas.json` (`envFlags`) and
 `evidence/generated/coordinator-atlas.json` (`envFlags`).
+
+## Recovered registry (0.24.0, wave 2)
+
+Full machine-readable extraction: `evidence/generated/feature-registry.json`
+(`scripts/analyze-features.mjs`; provenance recorded inside).
+
+| Surface | Count | Evidence |
+| --- | --- | --- |
+| `checkGate()` call sites (hard-coded gates) | 3 | electron-main `sand_multi_machine_local_exec`; host-main `sand_action_audit_logs`, `sand_new_transcript_journal` |
+| Dynamic-config keys with zod schemas in client | 130 | host-main + electron-main registries (`<key>:y.object({...})`) |
+| Grok Bot product keys (`sand_*` / `grok_*`) | 14 | e.g. sand_browser_use_model, sand_computer_use_playwright_config, sand_rpc_tracing, sand_min_client_version, grok_bot_conversation_size_limits |
+| Shared platform keys (Cursor/Anysphere lineage) | 116 | e.g. composer_hang_detection_config, mcp_oauth_refresh_policy, glass_* UI configs |
+
+**Confidence:** A for the 130 key names + zod value shapes (schema literals in bundle);
+B for gate list completeness (minified indirection could hide additional call sites).
+Minification may split names across string concatenation; a handful of keys show this
+artifact and are marked as-is. Presence = bundled capability, not enabled assignment.
