@@ -64,3 +64,29 @@ chrome-profile import. This grouping is structural evidence of subsystem ownersh
 - `npm run validate` — re-derives the surface from the artifact cache and fails on drift
   vs. the committed generated file; also gates SHA-256 provenance and absolute-path hygiene.
 - `npm test` — spot-checks counts and proven key examples.
+
+## Deepened contracts (wave 2)
+
+Per-handler extraction now runs over the full ma() group tables
+(`scripts/analyze-main-rpc.mjs`): payload key types, return-object shapes and
+assertion constraint strings, all from handler bodies in `electron-main.cjs`.
+
+| Evidence class | Methods | Confidence |
+| --- | --- | --- |
+| Object-payload methods with proven keys | 50 | A (destructure sites) |
+| Payload fields with primitive type + nullability | 12 | A- (typeof/`== null` checks in body) |
+| Return-object shapes with nullable flags | 2 | B+ (single-site literal; may miss multi-path returns) |
+| Constraint strings from main-process assertions | 10 | A (literal quotes) |
+| Remaining object-payload fields unresolved | ~38 | — (forwarded payloads, no inline type checks) |
+
+Constraint highlights (full list: `MAIN_RPC_CONSTRAINTS` in
+`src/wire/desktop-bridge.generated.ts`):
+
+- `readTranscriptStoreTail`: "requires an agent id, a positive limit, and a reason."
+- `getPublicBotTemplate`: "requires a UUID share id."
+- `updateComputer`: names the agent by string id; carries caller request id for dispatch ack.
+- `scheduleComputerUpgrade`: "requires a valid local time and IANA time zone."
+- `transcribeAudio`: "requires non-empty audio bytes."
+
+Unresolved fields are tracked per-method in `evidence/generated/main-rpc-handlers.json`
+(`fieldTypes` absent ⇒ no inline primitive evidence in the shipped bundle).

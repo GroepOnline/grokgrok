@@ -31,7 +31,15 @@ execFileSync("node", [path.join(REPO, "scripts", "analyze-main-rpc.mjs"), path.j
   { stdio: ["ignore", fs.openSync(path.join(CACHE, "main-rpc-handlers.json"), "w"), "inherit"] });
 const h = JSON.parse(fs.readFileSync(path.join(CACHE, "main-rpc-handlers.json"), "utf8"));
 const payloadKeys = {};
-for (const e of h.handlers) if (e.takesObjectPayload) payloadKeys[e.method] = e.payloadKeys;
+const fieldTypes = {};
+const returnKeys = {};
+const constraints = {};
+for (const e of h.handlers) {
+  if (e.takesObjectPayload) payloadKeys[e.method] = e.payloadKeys;
+  if (e.fieldTypes) fieldTypes[e.method] = e.fieldTypes;
+  if (e.returnKeys) returnKeys[e.method] = e.returnKeys;
+  if (e.messages) constraints[e.method] = e.messages;
+}
 
 // 3. domain events (curated filter of emit("...") names against EventEmitter internals)
 const main = fs.readFileSync(path.join(BUNDLES, "electron-main.cjs"), "utf8");
@@ -76,12 +84,39 @@ ${domainEvents.map((e) => `  ${JSON.stringify(e)},`).join("\n")}
 export type MainRpcEvent = (typeof MAIN_RPC_EVENTS)[number];
 
 /** Payload shapes for methods whose object keys are artifact-proven (destructured in main handlers). */
+type ProvenType = "string" | "number" | "boolean" | "array" | "object" | unknown;
 export interface ProvenPayloads {
 `;
+const tsType = (f) => {
+  const base = f.type === "array" ? "unknown[]" : f.type ?? "unknown";
+  return `${base}${f.nullable ? " | null" : ""}`;
+};
 for (const [name, keys] of Object.entries(payloadKeys)) {
-  ts += `  ${name}: { ${keys.map((k) => `readonly ${k}: unknown`).join("; ")} };\n`;
+  const ft = fieldTypes[name] ?? {};
+  ts += `  ${name}: { ${keys.map((k) => `readonly ${k}: ${ft[k] ? tsType(ft[k]) : "/* unresolved */ unknown"}`).join("; ")} };
+`;
 }
-ts += `}`;
+ts += `}
+
+/** Return-object shapes proven from handler bodies (arrow/return literals). */
+export interface ProvenReturns {
+`;
+for (const [name, ret] of Object.entries(returnKeys)) {
+  ts += `  ${name}: { ${Object.entries(ret).map(([k, v]) => `readonly ${k}: unknown${v.nullable ? " | null" : ""}`).join("; ")} };
+`;
+}
+ts += `}
+
+/** Human-readable constraint strings recovered from main-process assertions. */
+export const MAIN_RPC_CONSTRAINTS = {
+`;
+for (const [name, msgs] of Object.entries(constraints)) {
+  ts += `  ${name}: [
+${msgs.map((m) => `    ${JSON.stringify(m)},`).join("\n")}
+  ],
+`;
+}
+ts += `} as const;`;
 
 fs.mkdirSync
 

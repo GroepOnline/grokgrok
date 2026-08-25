@@ -36,9 +36,9 @@ export const MAIN_RPC_METHODS = {
   setEgressTunnelEnabled: { args: "object", payloadKeys: ["enabled"] },
   getEgressTunnelStatus: { args: "none" },
   getWebauthnProxyEnabled: { args: "none" },
-  setWebauthnProxyEnabled: { args: "object", payloadKeys: ["enabled"] },
+  setWebauthnProxyEnabled: { args: "object" },
   getUpdateStatus: { args: "none" },
-  checkForUpdates: { args: "none", payloadKeys: ["trigger"] },
+  checkForUpdates: { args: "none" },
   setUpdateTrack: { args: "object", payloadKeys: ["track"] },
   quitAndInstallUpdate: { args: "object", payloadKeys: ["expectedVersion"] },
   setAutoUpdateWhenIdleOptIn: { args: "object", payloadKeys: ["enabled"] },
@@ -46,14 +46,14 @@ export const MAIN_RPC_METHODS = {
   markDeepLinksReady: { args: "none" },
   getOnboardingSeen: { args: "none" },
   setOnboardingSeen: { args: "object", payloadKeys: ["seen"] },
-  getTimeZone: { args: "none", payloadKeys: ["detectedTimeZone", "overrideTimeZone"] },
+  getTimeZone: { args: "none" },
   setTimeZoneOverride: { args: "object", payloadKeys: ["timeZone"] },
   getAutoReviewInstructions: { args: "none" },
-  setAutoReviewInstructions: { args: "object", payloadKeys: ["instructions"] },
+  setAutoReviewInstructions: { args: "object" },
   getLocalToolPermission: { args: "none" },
   getLocalToolPermissionCeiling: { args: "none" },
   setLocalToolPermission: { args: "object" },
-  recordLocalToolApproval: { args: "object", payloadKeys: ["approvalId", "action", "target"] },
+  recordLocalToolApproval: { args: "object" },
   clearLocalToolApprovals: { args: "none" },
   getSidebarCollapsed: { args: "none" },
   setSidebarCollapsed: { args: "object" },
@@ -68,18 +68,18 @@ export const MAIN_RPC_METHODS = {
   commitStagedAttachments: { args: "object", payloadKeys: ["paths", "filenames"] },
   discardStagedAttachment: { args: "object", payloadKeys: ["path"] },
   forceRecreateComputer: { args: "none" },
-  updateComputer: { args: "object", payloadKeys: ["id", "requestId", "acknowledgeTerminalUpgradeSchedule"] },
+  updateComputer: { args: "object" },
   getComputerUpgradeSchedule: { args: "none" },
   scheduleComputerUpgrade: { args: "object" },
   rescheduleComputerUpgrade: { args: "object" },
   cancelComputerUpgrade: { args: "object" },
   forceReconnectGateway: { args: "none" },
   getExperimentsSnapshot: { args: "none" },
-  applyFeatureFlagOverride: { args: "object", payloadKeys: ["command"] },
+  applyFeatureFlagOverride: { args: "object" },
   refreshFeatureFlags: { args: "none" },
   startRpcTraceWindow: { args: "none" },
   getAgentDefaultModel: { args: "none" },
-  setAgentDefaultModel: { args: "object", payloadKeys: ["model"] },
+  setAgentDefaultModel: { args: "object" },
   readTranscriptStoreTail: { args: "object" },
   getPublicBotTemplate: { args: "object", payloadKeys: ["shareId"] },
   getComputerUseModel: { args: "none" },
@@ -89,7 +89,7 @@ export const MAIN_RPC_METHODS = {
   getHostSidebarSections: { args: "none" },
   setHostSidebarSections: { args: "object", payloadKeys: ["sections"] },
   getAvailableModels: { args: "none" },
-  transcribeAudio: { args: "object", payloadKeys: ["audio", "mimeType", "language"] },
+  transcribeAudio: { args: "object" },
   getCursorAuthStatus: { args: "none" },
   loginCursor: { args: "none" },
   cancelCursorLogin: { args: "none" },
@@ -115,7 +115,7 @@ export const MAIN_RPC_METHODS = {
   reportRecoveryAction: { args: "object" },
   reportRebuildLifecycle: { args: "object" },
   reportReconciliation: { args: "object" },
-  reportBoxVisibility: { args: "object", payloadKeys: ["report", "senderDocumentKey"] },
+  reportBoxVisibility: { args: "object" },
   reportSendLatency: { args: "object" },
   reportSendAck: { args: "object" },
   reportReactionAck: { args: "object" },
@@ -130,16 +130,16 @@ export const MAIN_RPC_METHODS = {
   reportClientFailure: { args: "object" },
   reportHeapMetrics: { args: "object" },
   noteSentryConversation: { args: "object" },
-  openCloudAgent: { args: "object", payloadKeys: ["bcId"] },
+  openCloudAgent: { args: "object" },
   getLinkMetadata: { args: "object", payloadKeys: ["url"] },
-  listSecrets: { args: "none", payloadKeys: ["keys", "isPersistent"] },
-  revealSecret: { args: "object", payloadKeys: ["key"] },
-  upsertSecrets: { args: "object", payloadKeys: ["entries"] },
-  removeSecrets: { args: "object", payloadKeys: ["keys"] },
-  readClientPersistence: { args: "object", payloadKeys: ["key"] },
-  writeClientPersistence: { args: "object", payloadKeys: ["key", "value"] },
-  removeClientPersistence: { args: "object", payloadKeys: ["key"] },
-  listClientPersistenceKeys: { args: "object", payloadKeys: ["prefix"] },
+  listSecrets: { args: "none" },
+  revealSecret: { args: "object" },
+  upsertSecrets: { args: "object" },
+  removeSecrets: { args: "object" },
+  readClientPersistence: { args: "object" },
+  writeClientPersistence: { args: "object" },
+  removeClientPersistence: { args: "object" },
+  listClientPersistenceKeys: { args: "object" },
   migrateClientPersistence: { args: "object", payloadKeys: ["entries"] },
   getMcpState: { args: "none" },
   getEffectivePlugins: { args: "none" },
@@ -160,7 +160,7 @@ export const MAIN_RPC_METHODS = {
   attachProdBoxStatus: { args: "none" },
   setAttachProdBoxEnabled: { args: "object", payloadKeys: ["enabled", "isRestartMainApp"] },
   listChromeProfiles: { args: "none" },
-  importChromeCookies: { args: "object", payloadKeys: ["cookies"] },
+  importChromeCookies: { args: "object" },
 } as const satisfies Record<string, RpcMethodInfo>;
 
 export type MainRpcMethod = keyof typeof MAIN_RPC_METHODS;
@@ -201,55 +201,77 @@ export const MAIN_RPC_EVENTS = [
 export type MainRpcEvent = (typeof MAIN_RPC_EVENTS)[number];
 
 /** Payload shapes for methods whose object keys are artifact-proven (destructured in main handlers). */
+type ProvenType = "string" | "number" | "boolean" | "array" | "object" | unknown;
 export interface ProvenPayloads {
-  checkForUpdates: { readonly trigger: unknown };
-  setUpdateTrack: { readonly track: unknown };
-  quitAndInstallUpdate: { readonly expectedVersion: unknown };
-  setAutoUpdateWhenIdleOptIn: { readonly enabled: unknown };
-  getTimeZone: { readonly detectedTimeZone: unknown; readonly overrideTimeZone: unknown };
-  setTimeZoneOverride: { readonly timeZone: unknown };
-  setAutoReviewInstructions: { readonly instructions: unknown };
-  recordLocalToolApproval: { readonly approvalId: unknown; readonly action: unknown; readonly target: unknown };
-  setThemePreference: { readonly preference: unknown };
-  setLanguagePreference: { readonly preference: unknown };
-  setHardwareAccelerationEnabled: { readonly enabled: unknown };
-  setAgentDefaultModel: { readonly model: unknown };
-  setComputerUseModel: { readonly model: unknown };
-  setHostPinnedAgents: { readonly pinnedAgentIds: unknown };
-  setHostSidebarSections: { readonly sections: unknown };
-  getPublicBotTemplate: { readonly shareId: unknown };
-  setEgressTunnelEnabled: { readonly enabled: unknown };
-  setWebauthnProxyEnabled: { readonly enabled: unknown };
-  setOnboardingSeen: { readonly seen: unknown };
-  openExternal: { readonly url: unknown };
-  openCloudAgent: { readonly bcId: unknown };
-  updateComputer: { readonly id: unknown; readonly requestId: unknown; readonly acknowledgeTerminalUpgradeSchedule: unknown };
-  setTitleBarOverlayTone: { readonly isOverlayTone: unknown };
-  resizeWindowWidth: { readonly deltaWidth: unknown };
-  generateAgentAvatarImage: { readonly description: unknown };
-  resolveAttachmentMedia: { readonly source: unknown };
-  readAttachmentText: { readonly path: unknown };
-  readAttachmentBytes: { readonly path: unknown; readonly maxBytes: unknown };
-  stageAttachmentBytes: { readonly filename: unknown; readonly bytes: unknown };
-  downloadAttachment: { readonly path: unknown; readonly suggestedName: unknown };
-  commitStagedAttachments: { readonly paths: unknown; readonly filenames: unknown };
-  discardStagedAttachment: { readonly path: unknown };
-  getLinkMetadata: { readonly url: unknown };
-  switchCursorAccount: { readonly accountId: unknown };
-  updateCursorAccountName: { readonly name: unknown };
-  updateSandMachineLabel: { readonly machineId: unknown; readonly label: unknown };
-  transcribeAudio: { readonly audio: unknown; readonly mimeType: unknown; readonly language: unknown };
-  reportBoxVisibility: { readonly report: unknown; readonly senderDocumentKey: unknown };
-  applyFeatureFlagOverride: { readonly command: unknown };
-  listSecrets: { readonly keys: unknown; readonly isPersistent: unknown };
-  revealSecret: { readonly key: unknown };
-  upsertSecrets: { readonly entries: unknown };
-  removeSecrets: { readonly keys: unknown };
-  readClientPersistence: { readonly key: unknown };
-  writeClientPersistence: { readonly key: unknown; readonly value: unknown };
-  removeClientPersistence: { readonly key: unknown };
-  listClientPersistenceKeys: { readonly prefix: unknown };
-  migrateClientPersistence: { readonly entries: unknown };
-  setAttachProdBoxEnabled: { readonly enabled: unknown; readonly isRestartMainApp: unknown };
-  importChromeCookies: { readonly cookies: unknown };
+  setUpdateTrack: { readonly track: unknown | null };
+  quitAndInstallUpdate: { readonly expectedVersion: string };
+  setAutoUpdateWhenIdleOptIn: { readonly enabled: boolean };
+  setTimeZoneOverride: { readonly timeZone: string | null };
+  setThemePreference: { readonly preference: /* unresolved */ unknown };
+  setLanguagePreference: { readonly preference: /* unresolved */ unknown };
+  setHardwareAccelerationEnabled: { readonly enabled: boolean };
+  setComputerUseModel: { readonly model: /* unresolved */ unknown };
+  setHostPinnedAgents: { readonly pinnedAgentIds: /* unresolved */ unknown };
+  setHostSidebarSections: { readonly sections: /* unresolved */ unknown };
+  getPublicBotTemplate: { readonly shareId: string };
+  setEgressTunnelEnabled: { readonly enabled: boolean };
+  setOnboardingSeen: { readonly seen: boolean };
+  openExternal: { readonly url: /* unresolved */ unknown };
+  setTitleBarOverlayTone: { readonly isOverlayTone: boolean };
+  resizeWindowWidth: { readonly deltaWidth: number };
+  generateAgentAvatarImage: { readonly description: /* unresolved */ unknown };
+  resolveAttachmentMedia: { readonly source: /* unresolved */ unknown };
+  readAttachmentText: { readonly path: /* unresolved */ unknown };
+  readAttachmentBytes: { readonly path: /* unresolved */ unknown; readonly maxBytes: /* unresolved */ unknown };
+  stageAttachmentBytes: { readonly filename: /* unresolved */ unknown; readonly bytes: /* unresolved */ unknown };
+  downloadAttachment: { readonly path: /* unresolved */ unknown; readonly suggestedName: /* unresolved */ unknown };
+  commitStagedAttachments: { readonly paths: /* unresolved */ unknown; readonly filenames: /* unresolved */ unknown };
+  discardStagedAttachment: { readonly path: /* unresolved */ unknown };
+  getLinkMetadata: { readonly url: /* unresolved */ unknown };
+  switchCursorAccount: { readonly accountId: /* unresolved */ unknown };
+  updateCursorAccountName: { readonly name: /* unresolved */ unknown };
+  updateSandMachineLabel: { readonly machineId: /* unresolved */ unknown; readonly label: /* unresolved */ unknown };
+  migrateClientPersistence: { readonly entries: unknown[] };
+  setAttachProdBoxEnabled: { readonly enabled: boolean; readonly isRestartMainApp: /* unresolved */ unknown };
 }
+
+/** Return-object shapes proven from handler bodies (arrow/return literals). */
+export interface ProvenReturns {
+  getTimeZone: { readonly detectedTimeZone: unknown | null; readonly overrideTimeZone: unknown | null };
+  listSecrets: { readonly keys: unknown; readonly isPersistent: unknown };
+}
+
+/** Human-readable constraint strings recovered from main-process assertions. */
+export const MAIN_RPC_CONSTRAINTS = {
+  recordLocalToolApproval: [
+    "A local-tool approval needs its request id and action.",
+  ],
+  setAgentDefaultModel: [
+    "Couldn't reach the computer to save the default model.",
+  ],
+  readTranscriptStoreTail: [
+    "A transcript store read requires an agent id, a positive limit, and a reason.",
+  ],
+  getPublicBotTemplate: [
+    "A public Bot template requires a UUID share id.",
+  ],
+  updateComputer: [
+    "A computer update names the agent by its string id.",
+    "A computer update carries the caller's request id for the dispatch acknowledgement.",
+  ],
+  scheduleComputerUpgrade: [
+    "A computer upgrade schedule requires a valid local time and IANA time zone.",
+  ],
+  rescheduleComputerUpgrade: [
+    "A computer upgrade reschedule requires a valid local time and IANA time zone.",
+  ],
+  cancelComputerUpgrade: [
+    "A computer upgrade cancellation requires a valid request.",
+  ],
+  transcribeAudio: [
+    "transcribeAudio requires non-empty audio bytes.",
+  ],
+  importChromeCookies: [
+    "A Chrome cookie import names the source profile by its directory id.",
+  ],
+} as const;
