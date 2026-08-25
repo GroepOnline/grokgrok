@@ -1,0 +1,18 @@
+{
+  "name": "grokgrok",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Clean-room reconstruction and architecture atlas for Grok Bot 0.24+",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "ingest": "node scripts/ingest.mjs",
+    "inventory": "node scripts/ingest.mjs --inventory-only",
+    "validate": "node scripts/validate-all.mjs",
+    "test": "node --test tests/",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

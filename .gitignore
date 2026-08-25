@@ -1,0 +1,15 @@
+# Generated evidence / extracted payloads are reproducible via scripts/, never committed
+evidence/generated/
+.cache/
+node_modules/
+dist/
+*.log
+
+# Never commit proprietary artifact payloads
+*.asar
+*.zip
+*.exe
+*.so
+*.node
+*.pak
+*.bin
