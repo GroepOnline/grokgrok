@@ -12,15 +12,15 @@
     {
       "subsystem": "desktop-bridge (dune-rpc)",
       "artifact024": "145-method main edge, probe/envelope protocol, trust policy",
-      "lineage018Match": "yes — preload exposes identical binding names (desktop, coordinatorPort); dune-rpc channel scheme present",
-      "grokBuildAnalogue": "partial — no public equivalent of the desktop bridge",
-      "openmausbotAnalogue": "no — web app uses direct API calls",
+      "lineage018Match": "yes \u2014 preload exposes identical binding names (desktop, coordinatorPort); dune-rpc channel scheme present",
+      "grokBuildAnalogue": "partial \u2014 no public equivalent of the desktop bridge",
+      "openmausbotAnalogue": "no \u2014 web app uses direct API calls",
       "confidence": "A"
     },
     {
       "subsystem": "coordinator runtime",
       "artifact024": "node-agent-coordinator with 103 commands, frame lifecycle hello/welcome/protocolVersion=1",
-      "lineage018Match": "yes — source/node-agent-coordinator exists in 0.18 tree",
+      "lineage018Match": "yes \u2014 source/node-agent-coordinator exists in 0.18 tree",
       "grokBuildAnalogue": "structural analogue in agent orchestration crates",
       "openmausbotAnalogue": "no direct analogue",
       "confidence": "A"
@@ -28,33 +28,73 @@
     {
       "subsystem": "host plane / box store",
       "artifact024": "SQLite tables agents/messages/media/blobs/transcript_entries; SandBox run/migration/upgrade state machines",
-      "lineage018Match": "yes — source/host present; store layout comparable",
+      "lineage018Match": "yes \u2014 source/host present; store layout comparable",
       "grokBuildAnalogue": "sandboxing concepts analogous (isolation, workspace)",
-      "openmausbotAnalogue": "weak — simple chat persistence only",
+      "openmausbotAnalogue": "weak \u2014 simple chat persistence only",
       "confidence": "A"
     },
     {
       "subsystem": "computer-use / VNC",
       "artifact024": "websockify tokens (port_token/network_token), vnc.html surface, vnc-user-presence events, preload-vnc",
-      "lineage018Match": "partial — computer-use concepts present, token scheme not confirmed",
+      "lineage018Match": "partial \u2014 computer-use concepts present, token scheme not confirmed",
       "grokBuildAnalogue": "tool-execution analogues only",
       "openmausbotAnalogue": "no",
       "confidence": "B"
     },
     {
       "subsystem": "feature flags / config",
-      "artifact024": "Statsig SDK endpoints, gate overrides env, experiments snapshot commands",
+      "artifact024": "Statsig endpoints + 130 zod-typed dynamic-config keys recovered from client registries (14 grok-bot-product / 116 shared-platform); 3 hard-coded checkGate sites",
       "lineage018Match": "unverified",
       "grokBuildAnalogue": "config-layer analogue",
       "openmausbotAnalogue": "no",
-      "confidence": "B"
+      "confidence": "A-"
     },
     {
       "subsystem": "coordinator system prompt",
-      "artifact024": "NOT RECOVERED — no claim made about proprietary prompt prose; section/contract structure only",
+      "artifact024": "NOT RECOVERED \u2014 no claim made about proprietary prompt prose; section/contract structure only",
       "lineage018Match": "n/a",
       "grokPromptsAnalogue": "reference for style/policy only; explicitly NOT evidence of the desktop coordinator prompt",
       "confidence": "F"
+    },
+    {
+      "subsystem": "protobuf wire atlas",
+      "artifact024": "43 messages / 7 enums / 3 collector services / 161 fields \u2014 OTel export format only, zero unresolved fields",
+      "lineage018Match": "not compared (telemetry surface)",
+      "grokBuildAnalogue": "opentelemetry conventions analogue",
+      "openmausbotAnalogue": "no",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "renderer topology",
+      "artifact024": "8 entrypoint dirs, 21 transcript cards, entrypoint framework contract (eagerBoundaries/lazyViews), semantic surface anchors, 303-edge chunk graph",
+      "lineage018Match": "unverified \u2014 0.18 tree lacks renderer dist evidence in our copy",
+      "grokBuildAnalogue": "no direct analogue",
+      "openmausbotAnalogue": "no (plain pages)",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "local-tool permission model",
+      "artifact024": "rank order never<ask<always; ceiling only restricts (min-rule); approvals journal file name proven",
+      "lineage018Match": "partial \u2014 approval concepts present, rank rule not confirmed",
+      "grokBuildAnalogue": "permission-gate analogue",
+      "openmausbotAnalogue": "no",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "skills/plugin roots",
+      "artifact024": "six skill source dirs (.cursor/.claude/.codex/.grok/.agents) + host-protected stores set incl. managed-skills/user-memory",
+      "lineage018Match": "unverified",
+      "grokBuildAnalogue": "skill/tool registry analogue",
+      "openmausbotAnalogue": "no",
+      "confidence": "A"
+    },
+    {
+      "subsystem": "desktop RPC payload types",
+      "artifact024": "50 object-payload methods with proven keys; 12 with primitive type+nullability from handler bodies; 10 constraint strings; remainder honestly unresolved",
+      "lineage018Match": "technique transferable (see docs/upstream brief)",
+      "grokBuildAnalogue": "n/a",
+      "openmausbotAnalogue": "n/a",
+      "confidence": "A-"
     }
   ]
 }
