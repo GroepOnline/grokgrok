@@ -1,6 +1,6 @@
 # Generated evidence / extracted payloads are reproducible via scripts/, never committed
 evidence/generated/
-.cache/
+.cache
 node_modules/
 dist/
 *.log

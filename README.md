@@ -27,6 +27,7 @@ Key recovered facts so far:
 
 ## Repo layout
 
+- `apps/desktop/` — runnable clean-room reconstruction shell (vanilla TS, zero runtime deps)
 - `scripts/` — reproducible ingest (`npm run ingest`), analyzers, generators, validators
 - `src/wire/` — generated clean-room wire interfaces (desktop bridge, coordinator bridge)
 - `evidence/curated/` — reviewed provenance docs · `evidence/generated/` — ignored outputs
@@ -38,9 +39,28 @@ Key recovered facts so far:
 
 ```sh
 GROK_BOT_ZIP=/path/to/Grok_Bot_0.24.0_linux_x64.zip npm run ingest   # verify SHA + extract to gitignored cache
-npm run validate        # deterministic validators (drift, sha gate, ledger)
+npm run validate        # deterministic validators (drift, sha gate, ledger, ui evidence)
 npm test                # spot-check suites
 npm run gen:desktop-bridge && npm run gen:coordinator-bridge   # regenerate wire TS
+npm run gen:labels      # regenerate apps/desktop/labels.ts from the ui evidence matrix
+```
+
+## Desktop reconstruction shell
+
+`apps/desktop` is a runnable clean-room shell of the Grok Bot 0.24 renderer:
+sidebar (design anchor), chat/composer with transcript cards (approvals, secret
+requests, Agent Computer activity), onboarding/tool selector, create-bot avatar
+picker, bot details, routines editor, plugins, settings (General / Plugins /
+Appearance / Updates), hidden chats, org chart / bot network, and a command
+palette. All product copy comes from `apps/desktop/labels.ts` (artifact-backed;
+see `docs/ui/surface-atlas.md`); geometry is marked visual-inference there.
+
+```sh
+npm run build:desktop          # compile to apps/desktop/dist
+# serve apps/desktop/dist and open /?scenario=<id> for a deterministic surface:
+# onboarding | create-bot | approvals | computer | teach | bot-details | routines |
+# plugins | settings-general | settings-appearance | settings-updates |
+# hidden-chats | org-chart | palette | empty-sidebar
 ```
 
 ## Rules

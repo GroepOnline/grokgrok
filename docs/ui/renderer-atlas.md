@@ -15,6 +15,30 @@ A for string-level hits, B for structural inferences below.
 - Design tokens are `--sand-*` (blur background, gradients, shadows: inline/modal/popover/window)
   plus `--cursor-radius-*`. Confirms the "sand" codename end-to-end.
 
+## Recovered structure (atlas v2)
+
+`scripts/analyze-renderer.mjs` recovers deterministically from the shipped bundles:
+
+- **Module graph** — 217 static `from"./…"` edges + **142 lazy `import("./…")` boundaries**;
+  the entry bundle lazily imports the `view-*` chunks (page surfaces).
+- **Semantic clusters** — 67 stable chunk-name prefixes (chat, agents, core, settings,
+  shared, view, general, updates, pane, messages, channel, surface, usage, map, graph,
+  plus diagram/mermaid/cytoscape vendor families).
+- **Stores** — the kv namespace allowlist recovered from `const T=[…],S=new Set(T)`:
+  `client-meta.account-slot`, `composer-drafts`, `host-settings.onboarding`,
+  `roster.agent-avatars`, `roster.last-roster`, `selection.last-agent`, `send-journal`,
+  `sidebar.last-sections`, `transcript.replicas`, `ui-agent-refs`, `ui-layout`, `other`.
+- **Transcript item registry** — text, attachment, widget, cursor-agent, secret-request,
+  email-draft, slack-draft, permission-request, connector, connectors, listener-connect,
+  bot-template-share, auto-review-approval, local-tool-permission (14 kinds).
+- **Event-card registry** — pr-opened, pr-pushed, pr-merged, review-requested,
+  review-approved, review-changes-requested, review-commented, pr-comment,
+  inline-review-comment, review-thread-resolved/unresolved, issue-assigned,
+  ci-passed, ci-failed (14 ids, main bundle).
+- **Label catalog** — ~18.7k i18n message entries (`key":["text"]`), of which the
+  curated surface labels are distilled into `evidence/generated/ui-evidence-matrix.json`
+  and `apps/desktop/labels.ts` (see surface-atlas.md).
+
 ## Product vocabulary confirmed in shipped bundles
 
 | String | Where |

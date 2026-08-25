@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "noEmit": true,
     "allowJs": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts", "apps/**/*.ts"]
 }

@@ -11,11 +11,12 @@
     "ingest": "node scripts/ingest.mjs",
     "inventory": "node scripts/ingest.mjs --inventory-only",
     "validate": "node scripts/validate-all.mjs",
+    "gen:labels": "node scripts/generate-labels.mjs",
     "gen:desktop-bridge": "node scripts/generate-desktop-bridge.mjs",
     "gen:coordinator-bridge": "node scripts/generate-coordinator-bridge.mjs",
     "test": "node --test tests/*.mjs",
     "typecheck": "tsc --noEmit",
-    "build:desktop": "tsc apps/desktop/app.ts --target es2022 --module esnext --moduleResolution bundler --lib es2022,dom --outDir apps/desktop/dist && cp apps/desktop/index.html apps/desktop/styles.css apps/desktop/dist/"
+    "build:desktop": "tsc -p apps/desktop/tsconfig.json && cp apps/desktop/index.html apps/desktop/styles.css apps/desktop/dist/"
   },
   "devDependencies": {
     "@types/node": "^26.3.0",
