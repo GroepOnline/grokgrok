@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "grokgrok claim ledger entry",
+  "type": "object",
+  "required": ["id", "claim", "confidence", "evidence"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^CLM-[0-9]{3}$" },
+    "claim": { "type": "string" },
+    "subsystem": { "type": "string" },
+    "confidence": {
+      "enum": ["A", "B", "C", "D", "E", "F"],
+      "description": "A=direct shipped-artifact string/struct proof; B=multiple artifact sites agree; C=single indirect artifact site; D=lineage/analogue only; E=public doc/screenshot; F=speculative"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "kind"],
+        "properties": {
+          "source": { "type": "string", "description": "artifact path, repo, or URL" },
+          "kind": { "enum": ["artifact-string", "artifact-structure", "lineage-0.18", "analogue-grok-build", "analogue-openmausbot", "official-prompts", "public-doc"] },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "validator": { "type": "string", "description": "script/test that re-checks this claim when possible" },
+    "hypothesisOnly": { "type": "boolean", "default": false },
+    "artifacts": { "type": "array", "items": { "type": "string" }, "description": "generated evidence files backing this claim" }
+  }
+}

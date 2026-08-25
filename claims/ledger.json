@@ -1,0 +1,106 @@
+{
+  "$schema": "./schema.json",
+  "entries": [
+    {
+      "id": "CLM-001",
+      "subsystem": "provenance",
+      "claim": "Primary artifact is Grok Bot 0.24.0 linux x64 with SHA-256 8d14c2bcecafe2f4dac4a90d9842bd94642851ee60de778ca614bfb11af53177",
+      "confidence": "A",
+      "evidence": [{ "source": "Grok_Bot_0.24.0_linux_x64.zip", "kind": "artifact-structure", "detail": "hash verified at ingest" }],
+      "validator": "scripts/validate-main-rpc.mjs"
+    },
+    {
+      "id": "CLM-002",
+      "subsystem": "desktop-bridge",
+      "claim": "Renderer↔main edge exposes exactly 145 RPC methods over dune-rpc channels with probe/envelope semantics",
+      "confidence": "A",
+      "evidence": [
+        { "source": "dist/electron-preload/preload.cjs", "kind": "artifact-structure", "detail": "arg-style table lists 145 methods" },
+        { "source": "dist/electron-main/main.cjs", "kind": "artifact-structure", "detail": "handler groups ma(\"<group>\",…) total 145" }
+      ],
+      "validator": "tests/main-rpc.test.mjs",
+      "artifacts": ["src/wire/desktop-bridge.generated.ts"]
+    },
+    {
+      "id": "CLM-003",
+      "subsystem": "desktop-bridge",
+      "claim": "Preload exposes exactly two bindings: desktop and coordinatorPort",
+      "confidence": "A",
+      "evidence": [{ "source": "dist/electron-preload/preload.cjs", "kind": "artifact-string", "detail": "exposeInMainWorld(\"desktop\"), exposeInMainWorld(\"coordinatorPort\")" }]
+    },
+    {
+      "id": "CLM-004",
+      "subsystem": "coordinator",
+      "claim": "node-agent-coordinator declares 103 distinct commands across coordinator-main/control edges with typed reply kinds",
+      "confidence": "A",
+      "evidence": [{ "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure", "detail": "method tables {name:{args,reply}}" }],
+      "validator": "tests/coordinator.test.mjs",
+      "artifacts": ["src/wire/coordinator-bridge.generated.ts"]
+    },
+    {
+      "id": "CLM-005",
+      "subsystem": "coordinator",
+      "claim": "Control protocol uses lifecycle|request|cancel|reply|event frames with welcome→hello handshake and numeric protocolVersion (=1 observed)",
+      "confidence": "B",
+      "evidence": [{ "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure", "detail": "frame switch + phase validators at multiple sites" }]
+    },
+    {
+      "id": "CLM-006",
+      "subsystem": "store",
+      "claim": "Agent store is SQLite (better-sqlite3) with tables meta/files/pending_deletes/agents/messages/media/kv/blobs/transcript_entries",
+      "confidence": "A",
+      "evidence": [{ "source": "dist/host/host-main.cjs", "kind": "artifact-string", "detail": "CREATE TABLE statements" }],
+      "validator": "scripts/analyze-host.mjs",
+      "artifacts": ["evidence/generated/host-atlas.json"]
+    },
+    {
+      "id": "CLM-007",
+      "subsystem": "execution",
+      "claim": "SandBox has run states ABSENT/HIBERNATED/RUNNING, 8-phase migration state machine, and an upgrade-schedule state machine",
+      "confidence": "A",
+      "evidence": [{ "source": "dist/host/host-main.cjs", "kind": "artifact-string", "detail": "SAND_BOX_RUN_STATE_*/SAND_BOX_MIGRATION_PHASE_*/SAND_BOX_UPGRADE_SCHEDULE_STATE_* enums" }],
+      "artifacts": ["evidence/generated/host-atlas.json"]
+    },
+    {
+      "id": "CLM-008",
+      "subsystem": "renderer",
+      "claim": "Renderer navigates via an in-app page stack (history.pages, View* models) rather than a URL router",
+      "confidence": "B",
+      "evidence": [{ "source": "dist/renderer/assets/index-Bbahbz13.js", "kind": "artifact-structure", "detail": "no router framework strings; history.pages stack present" }],
+      "artifacts": ["docs/ui/renderer-atlas.md"]
+    },
+    {
+      "id": "CLM-009",
+      "subsystem": "renderer",
+      "claim": "Design tokens use --sand-* custom properties plus --cursor-radius-* scale",
+      "confidence": "A",
+      "evidence": [{ "source": "dist/renderer/assets/index-yJda_gYk.css", "kind": "artifact-string" }],
+      "artifacts": ["evidence/generated/renderer-atlas.json"]
+    },
+    {
+      "id": "CLM-010",
+      "subsystem": "config",
+      "claim": "Feature flags/experiments are Statsig-based (featureassets.org/statsigapi.net endpoints, gate overrides env SAND_FEATURE_GATE_OVERRIDES)",
+      "confidence": "B",
+      "evidence": [{ "source": "dist/electron-main/main.cjs + dist/host/host-main.cjs", "kind": "artifact-string", "detail": "sdk endpoints + experiment_name/use_experimental_model_opt_out strings" }]
+    },
+    {
+      "id": "CLM-011",
+      "subsystem": "identity",
+      "claim": "App package name is 'sand' (productName 'Grok Bot'), built on @anysphere/* workspace stack",
+      "confidence": "A",
+      "evidence": [{ "source": "app.asar:package.json", "kind": "artifact-structure" }]
+    },
+    {
+      "id": "CLM-012",
+      "subsystem": "security",
+      "claim": "Auto-review approvals resolve via resolveAutoReviewApproval; local-tool permission via resolveLocalToolPermission + recordLocalToolApproval(approvalId, action, target); secrets via listSecrets/revealSecret/upsertSecrets/removeSecrets desktop commands and submitSecret/setBoxSecrets coordinator/host side",
+      "confidence": "A",
+      "evidence": [
+        { "source": "dist/node-agent-coordinator/main.cjs", "kind": "artifact-structure" },
+        { "source": "dist/electron-main/main.cjs", "kind": "artifact-structure" }
+      ],
+      "artifacts": ["src/wire/desktop-bridge.generated.ts", "src/wire/coordinator-bridge.generated.ts"]
+    }
+  ]
+}
